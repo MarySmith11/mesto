@@ -10,7 +10,7 @@
 
 **GH**
 
-* [Ссылка на проект в GH Pages]()
+* [Ссылка на проект в GH Pages](https://marysmith11.github.io/mesto/index.html)
 
 **Динамические возможности**
 
