@@ -1,0 +1,14 @@
+.button__like {
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.button__like:hover {
+    opacity: 0.6;
+}
+
+.button__like:focus{ 
+    outline: none; 
+  } 
