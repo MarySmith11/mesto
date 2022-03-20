@@ -1,4 +1,4 @@
-.button__like {
+.cards__like-button  {
     background: url(../../../images/like.svg) center no-repeat;
     background-size: 100%;
     width: 21px;
@@ -9,10 +9,10 @@
     margin-top: 4px;
 }
 
-.button__like:hover {
+.cards__like-button:hover {
     opacity: 0.6;
 }
 
-.button__like:focus{ 
+.cards__like-button:focus{ 
     outline: none; 
   } 

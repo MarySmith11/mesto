@@ -1,4 +1,4 @@
-.button__form {
+ .form__button {
     width: 100%;
     height: 50px;
     background-color: #000000;
@@ -15,12 +15,12 @@
     border: none;
 }
 
-.button__form:hover {
+.form__button:hover {
     opacity: 0.8;
 }
 
 @media screen and (max-width: 440px) {
-    .button__form {
+    .form__button {
         height: 46px;
         font-size: 14px;
         line-height: 17px;
