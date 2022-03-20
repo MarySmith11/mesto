@@ -1,8 +1,12 @@
 .button__like {
-    background-color: #fff;
+    background: url(../../../images/like.svg) center no-repeat;
+    background-size: 100%;
+    width: 21px;
+    height: 20px;
     border: none;
     cursor: pointer;
     transition: opacity 0.3s ease-in-out;
+    margin-top: 4px;
 }
 
 .button__like:hover {
