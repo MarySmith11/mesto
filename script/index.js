@@ -5,37 +5,30 @@ let formElement = popup.querySelector('.form');
 let nameInput = document.querySelector('.form__text_type_name');
 let jobInput = document.querySelector('.form__text_type_info');
 let userName = document.querySelector('.profile__name');
-let job = document.querySelector('.profile__profession');
+let userJob = document.querySelector('.profile__profession');
 
 function loadInformation () {
     nameInput.value = userName.textContent;
-    jobInput.value = job.textContent;
+    jobInput.value = userJob.textContent;
 }
 
 function openPopup () {
-    popup.classList.add('popup_state_opened');
     loadInformation();
+    popup.classList.add('popup_opened');
 }
 
 function closePopup () {
-    popup.classList.remove('popup_state_opened');
-}
-
-function keydownListener (e) {
-    if(e.keyCode === 27) {
-        closePopup();
-    }
+    popup.classList.remove('popup_opened');
 }
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
     userName.textContent = nameInput.value;
-    job.textContent = jobInput.value;
+    userJob.textContent = jobInput.value;
     closePopup();
 }
 
 buttonEdit.addEventListener('click', openPopup);
 closePopupButton.addEventListener('click', closePopup);
-document.addEventListener('keydown', keydownListener);
 formElement.addEventListener('submit', formSubmitHandler);
 

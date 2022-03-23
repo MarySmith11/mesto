@@ -23,7 +23,7 @@
         </div>
         <p class="profile__profession">Исследователь океана</p>
       </div>
-      <button type="button" class="profile__add-button" aria-label="Редактировать">+</button>
+      <button type="button" class="profile__add-button" aria-label="Добавить">+</button>
     </section>
 
     <section class="cards">
@@ -31,63 +31,62 @@
         <img src="./images/picture-1.jpg" alt="Карачаевск" class="cards__picture">
         <div class="cards__info">
           <h2 class="cards__title">Карачаевск</h2>
-          <button type="button" class="cards__like-button"></button>
+          <button type="button" class="cards__like-button cards__like-button_active" aria-label="Мне нравится"></button>
         </div>
       </article>
       <article class="cards__element">
         <img src="./images/picture-2.jpg" alt="Эльбрус" class="cards__picture">
         <div class="cards__info">
           <h2 class="cards__title">Гора Эльбрус</h2>
-          <button type="button" class="cards__like-button"></button>
+          <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
         </div>
       </article>
       <article class="cards__element">
         <img src="./images/picture-3.jpg" alt="Домбай" class="cards__picture">
         <div class="cards__info">
           <h2 class="cards__title">Домбай</h2>
-          <button type="button" class="cards__like-button"></button>
+          <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
         </div>
       </article>
       <article class="cards__element">
         <img src="./images/picture-2.jpg" alt="Эльбрус" class="cards__picture">
         <div class="cards__info">
           <h2 class="cards__title">Гора Эльбрус</h2>
-          <button type="button" class="cards__like-button"></button>
+          <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
         </div>
       </article>
       <article class="cards__element">
-        <img src="./images/picture-3.jpg" alt="Дjмбай" class="cards__picture">
+        <img src="./images/picture-3.jpg" alt="Домбай" class="cards__picture">
         <div class="cards__info">
           <h2 class="cards__title">Домбай</h2>
-          <button type="button" class="cards__like-button"></button>
+          <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
         </div>
       </article>
       <article class="cards__element">
         <img src="./images/picture-1.jpg" alt="Карачаевск" class="cards__picture">
         <div class="cards__info">
           <h2 class="cards__title">Карачаево-Черкесия</h2>
-          <button type="button" class="cards__like-button"></button>
+          <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
         </div>
       </article>
     </section>
-
-    <footer class="footer">
-      <p class="footer__copyright">© 2020 Mesto Russia</p>
-    </footer>
-
-    <section class="popup">
-      <div class="popup__container">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <form action="#" class="form">
-          <input type="text" name="name" class="form__text form__text_type_name" placeholder="Имя">
-          <input type="text" name="profession" class="form__text form__text_type_info" placeholder="Деятельность">
-          <button type="submit" class="form__button">Сохранить</button>
-        </form>
-        <button type="button" class="popup__close-button"></button>
-      </div>
-    </section>
   </main>
-  <script src="./index.js"></script>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+  </footer>
+
+  <div class="popup">
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form action="#" class="form" name="edit-profile">
+        <input required  type="text" name="name" class="form__text form__text_type_name" placeholder="Имя">
+        <input required  type="text" name="profession" class="form__text form__text_type_info" placeholder="Деятельность">
+        <button type="submit" class="form__button">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+    </div>
+  </div>
+  <script src="./script/index.js"></script>
 </body>
 
 </html>

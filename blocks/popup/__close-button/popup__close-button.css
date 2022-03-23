@@ -5,7 +5,7 @@
     position: absolute;
     background: url(../../../images/Close-Icon.svg) transparent no-repeat;
     background-size: cover;
-    top: -42px;
+    top: -40px;
     right: -40px;
     transition: opacity 0.3s ease-in-out;
     cursor: pointer;

@@ -16,7 +16,7 @@
     margin-bottom: 48px;
 }
 
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 560px) {
     .form__text:last-of-type {
         margin-bottom: 45px;
     }

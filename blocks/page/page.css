@@ -7,5 +7,6 @@
     text-rendering: optimizeLegibility;
     display: flex;
     flex-direction: column;
+    padding: 0 19px;
 }
 
