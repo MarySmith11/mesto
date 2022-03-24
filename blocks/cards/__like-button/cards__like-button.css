@@ -16,7 +16,3 @@
 .cards__like-button:focus {
     outline: none;
 }
-
-.cards__like-button:active {
-    background: url(../../../images/like-active.svg) center no-repeat;
-}
