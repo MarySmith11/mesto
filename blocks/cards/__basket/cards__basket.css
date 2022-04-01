@@ -1,0 +1,11 @@
+.cards__basket-button {
+    background: url(../../../images/basket.svg) center no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+    position: absolute;
+    width: 18px;
+    height: 19px;
+    top: 21px;
+    right: 20px;
+    border: none;
+}
