@@ -24,13 +24,18 @@ const loadInformation = () => {
     jobInput.value = userJob.textContent;
 }
 
+//закрытие попапа на esc
+function keydownListener(e) {
+    if (e.keyCode === 27) {
+        closePopup();
+    }
+}
+
 // функция открытия попапов
 function openPopup(openingPopup) {
-    // открытие попапа для редактирования
-    if (openingPopup.classList.contains('popup_type_edit')) {
-        loadInformation();
-    }
     openingPopup.classList.add('popup_opened');
+    // обработчик события нажатия клавиши на esc
+    document.addEventListener('keydown', keydownListener);
 }
 
 // функция закрытия попапов
@@ -40,13 +45,7 @@ function closePopup() {
     if (openedPopup) {
         // закрываем открытый попап
         openedPopup.classList.remove('popup_opened');
-    }
-}
-
-//закрытие попапа на esc
-function keydownListener(e) {
-    if (e.keyCode === 27) {
-        closePopup();
+        document.removeEventListener('keydown', keydownListener);
     }
 }
 
@@ -61,6 +60,7 @@ function editFormSubmitHandler(evt) {
 
 // обработчик клика на кнопку редактирования профиля
 buttonEdit.addEventListener('click', () => {
+    loadInformation();
     openPopup(popupEdit);
 });
 
@@ -73,9 +73,6 @@ buttonAdd.addEventListener('click', () => {
 closePopupButton.forEach((elem) => {
     elem.addEventListener('click', closePopup);
 })
-
-// обработчик события нажатия клавиши на esc
-document.addEventListener('keydown', keydownListener);
 
 // обработчики отправки форм
 editFormElement.addEventListener('submit', editFormSubmitHandler);
@@ -107,7 +104,6 @@ const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
-
 
 
 // функция 'мне нравится'
@@ -158,9 +154,7 @@ const addFormSubmitHandler = (evt) => {
     closePopup();
 }
 
-initialCards.forEach((element) => {
-    renderCard(element);
-});
+initialCards.forEach(renderCard);
 
 // создание карточки через попап
 addFormElement.addEventListener('submit', addFormSubmitHandler);
