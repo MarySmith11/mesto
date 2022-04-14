@@ -1,6 +1,5 @@
 // попапы
-const popup = document.querySelector('.popup');
-const closePopupButton = document.querySelectorAll('.popup__close-button');
+const closePopupButtons = document.querySelectorAll('.popup__close-button');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupTypeImage = document.querySelector('.popup_type_image');
@@ -18,6 +17,7 @@ const nameInput = editFormElement.elements.name;
 const jobInput = editFormElement.elements.profession;
 const titleNameInput = addFormElement.elements.titleName;
 const linkInput = addFormElement.elements.link;
+const buttonCreate = document.querySelector('.form__button_create');
 
 const cardsContainer = document.querySelector('.cards');
 
@@ -25,21 +25,21 @@ const cardsContainer = document.querySelector('.cards');
 const popupText = document.querySelector('.popup__text');
 const popupImage = document.querySelector('.popup__image');
 
-// получение текстового содержимого имени и профессии в профиле, и передаем значение в форму инпутам
+// получение текстового содержимого имени и профессии в профиле
 const loadInformation = () => {
     nameInput.value = userName.textContent;
     jobInput.value = userJob.textContent;
 }
  
 //закрытие попапа на esc
-const keydownListener = (e) => {
-    if (e.keyCode === 27) {
+const handleEscape = (e) => {
+    if (e.key === 'Escape') {
         closePopup();
     }
 }
 
 //закрытие попапа кликом на оверлей
-const clickOverlayHandler = (evt) => {
+const handleOverlay = (evt) => {
     if (evt.target.classList.contains('popup')) {
         closePopup();
     }
@@ -49,8 +49,8 @@ const clickOverlayHandler = (evt) => {
 const openPopup = (openingPopup) => {
     openingPopup.classList.add('popup_opened');
     // обработчик события нажатия клавиши на esc
-    document.addEventListener('keydown', keydownListener);
-    document.addEventListener('click', clickOverlayHandler);
+    document.addEventListener('keydown', handleEscape);
+    document.addEventListener('mousedown', handleOverlay);
 }
 
 // функция закрытия попапов
@@ -60,13 +60,13 @@ const closePopup = () => {
     if (openedPopup) {
         // закрываем открытый попап
         openedPopup.classList.remove('popup_opened');
-        document.removeEventListener('keydown', keydownListener);
-        document.removeEventListener('click', clickOverlayHandler);
+        document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener('mousedown', handleOverlay);
     }
 }
 
 // обработчик события 
-const editFormSubmitHandler = (evt) => {
+const handleProfileFormSubmit = (evt) => {
     // отмена стандартного поведения HTML
     evt.preventDefault();
     userName.textContent = nameInput.value;
@@ -86,12 +86,12 @@ buttonAdd.addEventListener('click', () => {
 });
 
 // обработчик клика на кнопку закрытия попапов (крестик)
-closePopupButton.forEach((elem) => {
+closePopupButtons.forEach((elem) => {
     elem.addEventListener('click', closePopup);
 })
 
 // обработчики отправки форм
-editFormElement.addEventListener('submit', editFormSubmitHandler);
+editFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 // массив с карточками
 const initialCards = [
@@ -123,21 +123,22 @@ const initialCards = [
 
 
 // функция 'мне нравится'
-const likeHandler = (evt) => {
+const handleLike  = (evt) => {
     evt.target.classList.toggle('cards__like-button_active');
 }
 
 // функция удаления карточек
-const removeHandler = (evt) => {
+const removeCard = (evt) => {
     evt.target.closest('.cards__element').remove();
 }
 
 // функция открытия попапа с картинкой
-const imagePopupOpenHandler = (evt) => {
+const openImagePopup = (evt) => {
     const title = evt.target.closest('.cards__element').querySelector('.cards__title').textContent;
     const image = evt.target.src;
     popupText.textContent = title;
     popupImage.src = image;
+    popupImage.alt = title;
     openPopup(popupTypeImage);
 }
 
@@ -145,11 +146,13 @@ const imagePopupOpenHandler = (evt) => {
 const createCard = (element) => {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.cloneNode(true);
+    const cardPicture = cardElement.querySelector('.cards__picture')
     cardElement.querySelector('.cards__title').textContent = element.name;
-    cardElement.querySelector('.cards__picture').src = element.link;
-    cardElement.querySelector('.cards__like-button').addEventListener('click', likeHandler);
-    cardElement.querySelector('.cards__basket-button').addEventListener('click', removeHandler);
-    cardElement.querySelector('.cards__picture').addEventListener('click', imagePopupOpenHandler);
+    cardPicture.src = element.link;
+    cardPicture.alt = element.name;
+    cardElement.querySelector('.cards__like-button').addEventListener('click', handleLike);
+    cardElement.querySelector('.cards__basket-button').addEventListener('click', removeCard);
+    cardPicture.addEventListener('click', openImagePopup);
     return cardElement;
 }
 
@@ -159,18 +162,19 @@ const renderCard = (element) => {
 }
 
 // обработчик отправки формы добавления карточки
-const addFormSubmitHandler = (evt) => {
+const handleFormSubmitAddCard = (evt) => {
     evt.preventDefault();
     const element = {};
     element.name = titleNameInput.value;
     element.link = linkInput.value;
     renderCard(element);
     addFormElement.reset();
-    //setSubmitButtonState(false);
+    buttonCreate.setAttribute('disabled', true);
+    buttonCreate.classList.add('form__button_disabled');
     closePopup();
 }
 
 initialCards.forEach(renderCard);
 
 // создание карточки через попап
-addFormElement.addEventListener('submit', addFormSubmitHandler);
+addFormElement.addEventListener('submit', handleFormSubmitAddCard);
