@@ -1,20 +1,27 @@
+// попапы
 const popup = document.querySelector('.popup');
-const buttonEdit = document.querySelector('.profile__edit-button');
-const buttonAdd = document.querySelector('.profile__add-button');
 const closePopupButton = document.querySelectorAll('.popup__close-button');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupTypeImage = document.querySelector('.popup_type_image');
-const editFormElement = popupEdit.querySelector('.form');
-const addFormElement = popupAdd.querySelector('.form');
-const nameInput = document.querySelector('.form__text_type_name');
-const jobInput = document.querySelector('.form__text_type_info');
+
+// профиль
 const userName = document.querySelector('.profile__name');
 const userJob = document.querySelector('.profile__profession');
-const createButton = document.querySelector('.form__button_create');
-const titleNameInput = addFormElement.querySelector('.form__text_type_title-name');
-const linkInput = addFormElement.querySelector('.form__text_type_link');
+const buttonEdit = document.querySelector('.profile__edit-button');
+const buttonAdd = document.querySelector('.profile__add-button');
+
+// формы и их элементы
+const editFormElement = document.forms['edit-profile'];
+const addFormElement = document.forms['add-card'];
+const nameInput = editFormElement.elements.name;
+const jobInput = editFormElement.elements.profession;
+const titleNameInput = addFormElement.elements.titleName;
+const linkInput = addFormElement.elements.link;
+
 const cardsContainer = document.querySelector('.cards');
+
+// попап карточки
 const popupText = document.querySelector('.popup__text');
 const popupImage = document.querySelector('.popup__image');
 
@@ -23,34 +30,43 @@ const loadInformation = () => {
     nameInput.value = userName.textContent;
     jobInput.value = userJob.textContent;
 }
-
+ 
 //закрытие попапа на esc
-function keydownListener(e) {
+const keydownListener = (e) => {
     if (e.keyCode === 27) {
         closePopup();
     }
 }
 
+//закрытие попапа кликом на оверлей
+const clickOverlayHandler = (evt) => {
+    if (evt.target.classList.contains('popup')) {
+        closePopup();
+    }
+} 
+
 // функция открытия попапов
-function openPopup(openingPopup) {
+const openPopup = (openingPopup) => {
     openingPopup.classList.add('popup_opened');
     // обработчик события нажатия клавиши на esc
     document.addEventListener('keydown', keydownListener);
+    document.addEventListener('click', clickOverlayHandler);
 }
 
 // функция закрытия попапов
-function closePopup() {
+const closePopup = () => {
     // находим открытый попап с данным классом
     const openedPopup = document.querySelector('.popup_opened');
     if (openedPopup) {
         // закрываем открытый попап
         openedPopup.classList.remove('popup_opened');
         document.removeEventListener('keydown', keydownListener);
+        document.removeEventListener('click', clickOverlayHandler);
     }
 }
 
 // обработчик события 
-function editFormSubmitHandler(evt) {
+const editFormSubmitHandler = (evt) => {
     // отмена стандартного поведения HTML
     evt.preventDefault();
     userName.textContent = nameInput.value;
@@ -149,8 +165,8 @@ const addFormSubmitHandler = (evt) => {
     element.name = titleNameInput.value;
     element.link = linkInput.value;
     renderCard(element);
-    titleNameInput.value = '';
-    linkInput.value = '';
+    addFormElement.reset();
+    //setSubmitButtonState(false);
     closePopup();
 }
 
@@ -158,5 +174,3 @@ initialCards.forEach(renderCard);
 
 // создание карточки через попап
 addFormElement.addEventListener('submit', addFormSubmitHandler);
-
-
