@@ -59,12 +59,15 @@ closePopupButtons.forEach((elem) => {
 // обработчики отправки форм
 editFormElement.addEventListener("submit", handleProfileFormSubmit);
 
-initialCards.forEach((initCard) => {
+// создание карточки
+const addCard = (initCard) => {
   const card = new Card(initCard, ".card-template");
-  const cardElement = card.generateCard();
+  cardsContainer.prepend(card.generateCard());
+}
 
+initialCards.forEach((initCard) => {
   // Добавляем в DOM
-  cardsContainer.prepend(cardElement);
+  addCard(initCard);
 });
 
 // обработчик отправки формы добавления карточки
@@ -73,9 +76,7 @@ const handleFormSubmitAddCard = (evt) => {
   const element = {};
   element.name = titleNameInput.value;
   element.link = linkInput.value;
-  const card = new Card(element, ".card-template");
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
+  addCard(element);
   addFormElement.reset();
   buttonCreate.setAttribute("disabled", true);
   buttonCreate.classList.add("form__button_disabled");
@@ -85,20 +86,16 @@ const handleFormSubmitAddCard = (evt) => {
 // создание карточки через попап
 addFormElement.addEventListener("submit", handleFormSubmitAddCard);
 
-const addFormValidator = new FormValidator({
+const validatorConfig = {
   inputSelector: ".form__text",
   submitButtonSelector: ".form__button",
   inactiveButtonClass: "form__button_disabled",
   inputErrorClass: "form__text_type_error",
   errorClass: "form__error_visible",
-}, addFormElement);
+}
+
+const addFormValidator = new FormValidator(validatorConfig, addFormElement);
 addFormValidator.enableValidation();
 
-const editFormValidator = new FormValidator({
-    inputSelector: ".form__text",
-    submitButtonSelector: ".form__button",
-    inactiveButtonClass: "form__button_disabled",
-    inputErrorClass: "form__text_type_error",
-    errorClass: "form__error_visible",
-  }, editFormElement);
+const editFormValidator = new FormValidator(validatorConfig, editFormElement);
 editFormValidator.enableValidation();

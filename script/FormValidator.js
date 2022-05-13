@@ -6,6 +6,7 @@ export class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
     this._form = form;
+    this._submitButton = this._form.querySelector(config.submitButtonSelector);
   }
 
   enableValidation() {
@@ -52,70 +53,12 @@ export class FormValidator {
 
   // функция смены состояния кнопки
   _setSubmitButtonState(isFormValid) {
-    const buttonElement = this._form.querySelector(this._submitButtonSelector);    
-    buttonElement.classList.toggle(this._inactiveButtonClass, !isFormValid);
+    this._submitButton.classList.toggle(this._inactiveButtonClass, !isFormValid);
     if (isFormValid) {
-      buttonElement.removeAttribute('disabled');
+      this._submitButton.removeAttribute('disabled');
     } else {
-      buttonElement.setAttribute('disabled', true);    
+      this._submitButton.setAttribute('disabled', true);    
     }
   }
 }
 
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// функция состояния кнопки
-const _setSubmitButtonState = (formElement, selectors, isFormValid) => {
-  const buttonElement = formElement.querySelector(
-    selectors.submitButtonSelector
-  );
-  if (isFormValid) {
-    buttonElement.removeAttribute("disabled");
-    buttonElement.classList.remove(selectors.inactiveButtonClass);
-  } else {
-    buttonElement.setAttribute("disabled", true);
-    buttonElement.classList.add(selectors.inactiveButtonClass);
-  }
-};
-
-/
-
-
-
-*/

@@ -24,8 +24,9 @@ export default class Card {
     this._setEventListeners();
     // Добавим данные
     this._element.querySelector(".cards__title").textContent = this._name;
-    this._element.querySelector(".cards__picture").src = this._link;
-    this._element.querySelector(".cards__picture").alt = this._name;
+    const cardPicture = this._element.querySelector(".cards__picture");
+    cardPicture.src = this._link;
+    cardPicture.alt = this._name;
 
     // Вернём элемент наружу
     return this._element;
@@ -40,6 +41,7 @@ export default class Card {
   // функция удаления карточек
   _removeCard() {
     this._element.remove();
+    this._element = null;
   }
 
   // функция открытия попапа с картинкой
