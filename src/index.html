@@ -4,18 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 
 <body class="page">
   <header class="header">
-    <img src="./images/logo.svg" alt="место" class="header__logo">
+    <img src="<%=require('./images/logo.svg')%>" alt="место" class="header__logo">
   </header>
 
   <main class="content">
     <section class="profile">
-      <img class="profile__avatar" src="./images/photo-profile.jpg" alt="аватар">
+      <img class="profile__avatar" src="<%=require('./images/photo-profile.jpg')%>" alt="аватар">
       <div class="profile__info">
         <div class="profile__name-wrap">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -36,7 +35,7 @@
 
   <template class="card-template">
     <article class="cards__element">
-      <img src="./images/picture-1.jpg" alt="шаблон места" class="cards__picture">
+      <img src="<%=require('./images/picture-1.jpg')%>" alt="шаблон места" class="cards__picture">
       <button type="button" class="cards__basket-button" aria-label="Удалить"></button>
       <div class="cards__info">
         <h2 class="cards__title"></h2>
@@ -79,13 +78,13 @@
 
   <div class="popup popup_type_image">
     <div class="popup__image-container">
-      <img src="./images/popup-image.jpg" alt="картинка-попап" class="popup__image">
+      <img src="<%=require('./images/popup-image.jpg')%>" alt="картинка-попап" class="popup__image">
       <p class="popup__text">Карачаево-Черкессия</p>
       <button type="button" class="popup__close-button  popup__close-button_image" aria-label="Закрыть"></button>
     </div>
   </div>
 
-  <script type="module" src="./pages/index.js"></script>
+  <script type="module" src="./index.js"></script>
 </body>
 
 </html>
