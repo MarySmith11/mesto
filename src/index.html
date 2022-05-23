@@ -22,7 +22,11 @@
         </div>
         <p class="profile__profession">Исследователь океана</p>
       </div>
-      <button type="button" class="profile__add-button" aria-label="Добавить">+</button>
+      <button type="button" class="profile__add-button" aria-label="Добавить"><svg xmlns="http://www.w3.org/2000/svg"
+          width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M22 9.77778H12.2222V0H9.77778V9.77778H0V12.2222H9.77778V22H12.2222V12.2222H22V9.77778Z"
+            fill="white" />
+        </svg></button>
     </section>
 
     <section class="cards">
@@ -48,12 +52,16 @@
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form action="#" class="form" name="edit-profile" novalidate>
-        <input required type="text" name="name" class="form__text form__text_type_name" placeholder="Имя"
-          id="name-input" minlength="2" maxlength="40">
-        <span class="form__error name-input-error"></span>
-        <input required type="text" name="profession" class="form__text form__text_type_info" placeholder="О себе"
-          id="profession-input" minlength="2" maxlength="200">
-        <span class="form__error profession-input-error"></span>
+        <div class="form__text-wrap">
+          <input required type="text" name="name" class="form__text form__text_type_name" placeholder="Имя"
+            id="name-input" minlength="2" maxlength="40">
+          <span class="form__error name-input-error"></span>
+        </div>
+        <div class="form__text-wrap">
+          <input required type="text" name="profession" class="form__text form__text_type_info" placeholder="О себе"
+            id="profession-input" minlength="2" maxlength="200">
+          <span class="form__error profession-input-error"></span>
+        </div>
         <button type="submit" class="form__button">Сохранить</button>
       </form>
       <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
@@ -64,12 +72,16 @@
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
       <form action="#" class="form form_add" name="add-card" novalidate>
-        <input required type="text" name="name" class="form__text form__text_type_title-name"
-          placeholder="Название" id="place-title-input" minlength="2" maxlength="30">
-        <span class="form__error place-title-input-error"></span>
-        <input required type="url" name="link" class="form__text form__text_type_link" placeholder="Ссылка на картинку"
-          id="link-input">
-        <span class="form__error link-input-error"></span>
+        <div class="form__text-wrap">
+          <input required type="text" name="name" class="form__text form__text_type_title-name" placeholder="Название"
+            id="place-title-input" minlength="2" maxlength="30">
+          <span class="form__error place-title-input-error"></span>
+        </div>
+        <div class="form__text-wrap">
+          <input required type="url" name="link" class="form__text form__text_type_link"
+            placeholder="Ссылка на картинку" id="link-input">
+          <span class="form__error link-input-error"></span>
+        </div>
         <button type="submit" class="form__button form__button_create form__button_disabled" disabled>Создать</button>
       </form>
       <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
@@ -84,7 +96,7 @@
     </div>
   </div>
 
-  <script type="module" src="./index.js"></script>
+  <script type="module" src="./pages/index.js"></script>
 </body>
 
 </html>

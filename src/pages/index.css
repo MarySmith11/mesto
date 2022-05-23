@@ -35,6 +35,7 @@
 @import url(../blocks/form/__button/form__button.css);
 @import url(../blocks/form/__button/_disabled/form__button_disabled.css);
 @import url(../blocks/form/__text/_type/form__text_type_error.css);
+@import url(../blocks/form/__text-wrap/form__text-wrap.css);
 @import url(../blocks/form/__error/form__error.css);
 @import url(../blocks/form/__error/_visible/form__error_visible.css);
 

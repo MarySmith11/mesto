@@ -5,4 +5,7 @@
     line-height: 15px;
     color: #FF0000;
     transition: 0.3s;
+    position: absolute;
+    top: 38px;
+    z-index: 1;
 }

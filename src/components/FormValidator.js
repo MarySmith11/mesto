@@ -16,6 +16,11 @@ export class FormValidator {
     this._setEventListeners();
   }
 
+  clearForm() {
+    this._form.reset();
+    this._setSubmitButtonState(false);
+  }
+
   _setEventListeners() {
     Array.from(this._form.querySelectorAll(this._inputSelector)).forEach(
       (input) => {
