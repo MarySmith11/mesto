@@ -1,7 +1,6 @@
 .profile__add-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    background: url(../../../images/plus.svg) center no-repeat;
     width: 150px;
     height: 50px;
     border: 2px solid #fff;
@@ -19,10 +18,6 @@
 @media screen and (max-width: 400px) {
     .profile__add-button {
         width: 282px;
-    }
-
-    .profile__add-button svg {
-        width: 16px;
-        height: 16px;
+        background-size: 16px 16px;
     }
 }
