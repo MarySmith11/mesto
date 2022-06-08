@@ -14,7 +14,9 @@
 
   <main class="content">
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/photo-profile.jpg')%>" alt="аватар">
+      <div class="profile__avatar-wrap">
+        <img class="profile__avatar" src="<%=require('./images/photo-profile.jpg')%>" alt="аватар">
+      </div>
       <div class="profile__info">
         <div class="profile__name-wrap">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -39,7 +41,10 @@
       <button type="button" class="cards__basket-button" aria-label="Удалить"></button>
       <div class="cards__info">
         <h2 class="cards__title"></h2>
-        <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
+        <div class="cards__like">
+          <button type="button" class="cards__like-button" aria-label="Мне нравится"></button>
+          <p class="cards__like-counter">0</p>
+        </div>
       </div>
     </article>
   </template>
@@ -79,6 +84,31 @@
           <span class="form__error link-input-error"></span>
         </div>
         <button type="submit" class="form__button form__button_create form__button_disabled" disabled>Создать</button>
+      </form>
+      <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_confirmation">
+    <div class="popup__container">
+      <h2 class="popup__title popup__title-confirmation">Вы уверены?</h2>
+      <form action="#" class="form form_delete" name="delete-card" novalidate>
+        <button type="submit" class="form__button form__button_delete">Да</button>
+      </form>
+      <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_avatar">
+    <div class="popup__container">
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form action="#" class="form form_add" name="update-avatar" novalidate>
+        <div class="form__text-wrap">
+          <input required type="url" name="avatar" class="form__text form__text_type_avatar"
+            placeholder="Ссылка на картинку" id="avatar-input">
+          <span class="form__error avatar-input-error"></span>
+        </div>
+        <button type="submit" class="form__button form__button_disabled" disabled>Сохранить</button>
       </form>
       <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
     </div>

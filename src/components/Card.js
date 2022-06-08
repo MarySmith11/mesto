@@ -1,9 +1,16 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, handleCardRemove, handleCardLike) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data.id;
+    this._likes = data.likes;
+    this._isLiked = data.isLiked;
+    this._isOwner = data.isOwner;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleCardRemove = handleCardRemove;
+    this._handleCardLike = handleCardLike;
+    this._likeCounter = null;
   }
 
   _getTemplate() {
@@ -22,22 +29,30 @@ export default class Card {
     this._setEventListeners();
     // Добавим данные
     this._element.querySelector(".cards__title").textContent = this._name;
+    this._likeCounter = this._element.querySelector('.cards__like-counter');
+    this.setLikeCount(this._likes);
     const cardPicture = this._element.querySelector(".cards__picture");
     cardPicture.src = this._link;
     cardPicture.alt = this._name;
+    if (!this._isOwner) {
+      this._element.querySelector(".cards__basket-button").remove();
+    }
+    if (this._isLiked) {
+      this.handleLike();
+    }
 
     // Вернём элемент наружу
     return this._element;
   }
   // функция 'мне нравится'
-  _handleLike() {
+  handleLike() {
     this._element
       .querySelector(".cards__like-button")
       .classList.toggle("cards__like-button_active");
   }
 
   // функция удаления карточек
-  _removeCard() {
+  removeCard() {
     this._element.remove();
     this._element = null;
   }
@@ -45,18 +60,22 @@ export default class Card {
   _setEventListeners() {
     this._element
       .querySelector(".cards__like-button")
-      .addEventListener("click", () => {
-        this._handleLike();
-      });
+      .addEventListener("click", this._handleCardLike.bind(this));
     this._element
       .querySelector(".cards__basket-button")
-      .addEventListener("click", () => {
-        this._removeCard();
-      });
+      .addEventListener("click", this._handleCardRemove.bind(this));
     this._element
       .querySelector(".cards__picture")
       .addEventListener("click", () => {
         this._handleCardClick(this._name, this._link);
       });
+  }
+
+  setLikeCount(count) {
+    this._likeCounter.textContent = count;
+  }
+
+  isLiked() {
+    return this._isLiked;
   }
 }
