@@ -15,6 +15,7 @@ import {
 } from "../utils/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupConfirmation from '../components/PopupConfirmation.js';
 import UserInfo from "../components/UserInfo.js";
 import Api from '../components/Api.js';
 
@@ -32,6 +33,21 @@ const apiInstance = new Api({
 const imagePopup = new PopupWithImage(".popup_type_image");
 imagePopup.setEventListeners();
 
+// попап подтверждения удаления карточки
+const removeCardPopup = new PopupConfirmation(
+  '.popup_type_confirmation',
+  (card) => {
+    apiInstance.removeCard(card.getId())
+      .then(() => {
+        card.removeCard();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
+removeCardPopup.setEventListeners();
+
 const createCard = (item) => {
   const card = new Card(
     item,
@@ -39,21 +55,8 @@ const createCard = (item) => {
     (name, link) => {
       imagePopup.open(name, link);
     },
-    () => {
-      const removeCardPopup = new PopupWithForm(
-        '.popup_type_confirmation',
-        () => {
-          apiInstance.removeCard(item.id)
-            .then(() => {
-              card.removeCard();
-              removeCardPopup.close();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      );
-      removeCardPopup.setEventListeners();
+    () => {  
+      removeCardPopup.setCard(card);
       removeCardPopup.open();
     },
     () => {
@@ -88,15 +91,17 @@ const editAvatarPopup = new PopupWithForm('.popup_type_avatar', (values) => {
         avatar: res.avatar
       });
       editAvatarPopup.close();
-      editAvatarPopup.getButtonElement().textContent = 'Сохранить';
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => {
+      editAvatarPopup.getButtonElement().textContent = 'Сохранить';
+    })
 });
 editAvatarPopup.setEventListeners();
-const editAvatarValidator = new FormValidator(validatorConfig, updateAvatarFormElement); 
-editAvatarValidator.enableValidation(); 
+const editAvatarValidator = new FormValidator(validatorConfig, updateAvatarFormElement);
+editAvatarValidator.enableValidation();
 editAvatarOpener.addEventListener('click', editAvatarPopup.open.bind(editAvatarPopup));
 
 // попап редактирования профиля
@@ -117,20 +122,72 @@ const editPopup = new PopupWithForm(".popup_type_edit", (values) => {
         name: res.name,
         profession: res.about
       });
-      editPopup.getButtonElement().textContent = 'Сохранить';
       editPopup.close();
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => {
+      editPopup.getButtonElement().textContent = 'Сохранить';
+    })
 });
-
 editPopup.setEventListeners();
 
 // обработчик клика на кнопку редактирования профиля
 buttonEdit.addEventListener("click", () => {
   loadInformation();
   editPopup.open();
+});
+
+// создание списка карточек
+const cardList = new Section(
+  (item) => {
+    cardList.addItem(
+      createCard(item),
+      true
+    );
+  },
+  ".cards",
+  userInfo
+);
+
+// попап добавления карточки
+const addPopup = new PopupWithForm(".popup_type_add", (values) => {
+  addPopup.getButtonElement().textContent = 'Сохранение...';
+  const item = {
+    name: values['name'],
+    link: values['link']
+  };
+  apiInstance.addNewCard(item)
+    .then((res) => {
+      cardList.addItem(
+        createCard(
+          {
+            name: res.name,
+            link: res.link,
+            id: res._id,
+            likes: res.likes.length,
+            isOwner: res.owner._id === userInfo.getUserId(),
+            isLiked: Array.from(res.likes).some((like) => like._id === userInfo.getUserId())
+          }),
+      );
+      addPopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      addPopup.getButtonElement().textContent = 'Сохранить';
+    })
+});
+addPopup.setEventListeners();
+
+const addFormValidator = new FormValidator(validatorConfig, addFormElement);
+addFormValidator.enableValidation();
+
+buttonAdd.addEventListener("click", () => {
+  addFormValidator.clearForm();
+  addPopup.open();
 });
 
 apiInstance.getUserInfo()
@@ -147,73 +204,7 @@ apiInstance.getUserInfo()
     apiInstance.getInitialCards()
       .then((res) => {
         /*результат полученных с сервера карточек */
-        const initialCards = [];
-        res.forEach((resItem) => {
-          initialCards.push(
-            {
-              name: resItem.name,
-              link: resItem.link,
-              likes: resItem.likes.length,
-              id: resItem._id,
-              isOwner: resItem.owner._id === userInfo.getUserId(),
-              isLiked: Array.from(resItem.likes).some((like) => like._id === userInfo.getUserId())
-            }
-          );
-        });
-
-
-        // создание карточки
-        const cardList = new Section(
-          {
-            items: initialCards,
-            renderer: (item) => {
-              cardList.addItem(
-                createCard(item),
-                true
-              );
-            }
-          },
-          ".cards"
-        );
-        cardList.renderItems();
-
-        // попап добавления карточки
-        const addPopup = new PopupWithForm(".popup_type_add", (values) => {
-          addPopup.getButtonElement().textContent = 'Сохранение...';
-          const item = {
-            name: values['name'],
-            link: values['link']
-          };
-          apiInstance.addNewCard(item)
-            .then((res) => {
-              cardList.addItem(
-                createCard(
-                  {
-                    name: res.name,
-                    link: res.link,
-                    id: res._id,
-                    likes: res.likes.length,
-                    isOwner: res.owner._id === userInfo.getUserId(),
-                    isLiked: Array.from(res.likes).some((like) => like._id === userInfo.getUserId())
-                  }),
-              );
-              addPopup.getButtonElement().textContent = 'Сохранить';
-              addPopup.close();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-        addPopup.setEventListeners();
-
-        const addFormValidator = new FormValidator(validatorConfig, addFormElement);
-        addFormValidator.enableValidation();
-
-        buttonAdd.addEventListener("click", () => {
-          addFormValidator.clearForm();
-          addPopup.open();
-        });
-
+        cardList.renderItems(res);
       }).catch((err) => {
         console.log(err);
       })

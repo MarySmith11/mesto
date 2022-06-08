@@ -10,12 +10,7 @@ export default class Api {
             {
                 headers: this._baseHeaders
             }
-        ).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Произошла ошибка при получении информации о пользователе: ${res.status} ${res.statusText}`);
-        });
+        ).then((res) => this._getResponse(res, 'Произошла ошибка при получении информации о пользователе'));
     }
 
     getInitialCards() {
@@ -25,12 +20,7 @@ export default class Api {
                 headers: this._baseHeaders
             }
         )
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Произошла ошибка при получении карточек: ${res.status} ${res.statusText}`);
-            })
+            .then((res) => this._getResponse(res, 'Произошла ошибка при получении карточек'));
     }
 
     updateUserProfile({ name, about }) {
@@ -45,34 +35,22 @@ export default class Api {
                 })
             }
         )
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Произошла ошибка при обновлении профиля пользователя: ${res.status} ${res.statusText}`);
-            }
-            );
+            .then((res) => this._getResponse(res, 'Произошла ошибка при обновлении профиля пользователя'));
     }
 
-    updateUserAvatar(avatar) { 
-        return fetch( 
-          `${this._baseUrl}/users/me/avatar`, 
-          { 
-            method: 'PATCH', 
-            headers: this._baseHeaders, 
-            body: JSON.stringify({ 
-              avatar 
-            }) 
-          } 
-        ) 
-        .then((res) => { 
-          if (res.ok) { 
-            return res.json(); 
-          } 
-          return Promise.reject(`Произошла ошибка при обновлении аватара пользователя: ${res.status} ${res.statusText}`); 
-          } 
-        ); 
-      } 
+    updateUserAvatar(avatar) {
+        return fetch(
+            `${this._baseUrl}/users/me/avatar`,
+            {
+                method: 'PATCH',
+                headers: this._baseHeaders,
+                body: JSON.stringify({
+                    avatar
+                })
+            }
+        )
+            .then((res) => this._getResponse(res, 'Произошла ошибка при обновлении аватара пользователя'));
+    }
 
     addNewCard({ name, link }) {
         return fetch(
@@ -86,13 +64,7 @@ export default class Api {
                 })
             }
         )
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Произошла ошибка при добавлении новой карточки: ${res.status} ${res.statusText}`);
-            }
-            );
+            .then((res) => this._getResponse(res, 'Произошла ошибка при добавлении новой карточк'));
     }
 
     removeCard(cardId) {
@@ -103,13 +75,7 @@ export default class Api {
                 headers: this._baseHeaders
             }
         )
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Произошла ошибка при удалении карточки: ${res.status} ${res.statusText}`);
-            }
-            );
+            .then((res) => this._getResponse(res, 'Произошла ошибка при удалении карточки'));
     }
 
     likeAction(cardId, type) {
@@ -120,12 +86,13 @@ export default class Api {
                 headers: this._baseHeaders
             }
         )
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Произошла ошибка при постановке лайка: ${res.status} ${res.statusText}`);
-            }
-            );
+            .then((res) => this._getResponse(res, 'Произошла ошибка при постановке лайка'));
+    }
+
+    _getResponse(res, errorText) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`${errorText}: ${res.status} ${res.statusText}`);
     }
 } 

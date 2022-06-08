@@ -1,9 +1,9 @@
 //отрисовка элементов на странице
 export default class Section {
-  constructor({ items, renderer }, containerSelector) {
-    this._renderedItems = items;
+  constructor(renderer, containerSelector, userInfo) {
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
+    this._userInfo = userInfo;
   }
 
   addItem(element, append = false) {
@@ -14,9 +14,16 @@ export default class Section {
     }
   }
 
-  renderItems() {
-    this._renderedItems.forEach((item) => {
-        this._renderer(item); 
+  renderItems(res) {
+    res.forEach((item) => {
+        this._renderer({
+          name: item.name,
+          link: item.link,
+          likes: item.likes.length,
+          id: item._id,
+          isOwner: item.owner._id === this._userInfo.getUserId(),
+          isLiked: Array.from(item.likes).some((like) => like._id === this._userInfo.getUserId())
+        }); 
       });
   }
 }

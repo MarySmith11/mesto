@@ -78,4 +78,8 @@ export default class Card {
   isLiked() {
     return this._isLiked;
   }
+
+  getId() {
+    return this._id;
+  }
 }
