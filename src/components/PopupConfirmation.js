@@ -5,7 +5,7 @@ export default class PopupConfirmation extends Popup {
     super(popupSelector);
     this._buttonClickCallback = buttonClickCallback;
     this._buttonClickHandler = this._buttonClickHandler.bind(this);
-    this._confirmationButton = this._popup.querySelector('.form__button_type_confirmation');
+    this._confirmationButton = this._popup.querySelector('.popup__button_type_confirmation');
     this._card = null;
   }
 
